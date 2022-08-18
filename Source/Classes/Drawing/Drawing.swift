@@ -174,7 +174,6 @@ extension NantesLabel {
                 let lineWidth: CGFloat = attributes[.nantesLabelBackgroundLineWidth] as? CGFloat ?? 0.0
 
                 guard strokeColor != nil || fillColor != nil else {
-                    lineIndex += 1
                     continue
                 }
 
@@ -195,7 +194,7 @@ extension NantesLabel {
                     xOffset = CTLineGetOffsetForStringIndex(line, glyphRange.location, nil)
                 }
 
-                runBounds.origin.x = origins[lineIndex].x + rect.origin.x + xOffset - fillPadding.left - rect.origin.x
+                runBounds.origin.x = max(origins[lineIndex].x + rect.origin.x + xOffset - fillPadding.left - rect.origin.x, 0)
                 runBounds.origin.y = origins[lineIndex].y + rect.origin.y - fillPadding.bottom - rect.origin.y - runDescent
 
                 // We don't want to draw too far to the right
